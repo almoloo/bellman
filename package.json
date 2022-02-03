@@ -1,0 +1,27 @@
+{
+  "name": "bellman",
+  "version": "1.0.0",
+  "description": "Get notified of cryptocurrency price changes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/almoloo/bellman.git"
+  },
+  "keywords": [
+    "crypto",
+    "cryptocurrency",
+    "bitcoin",
+    "ethereum",
+    "alert",
+    "notification"
+  ],
+  "author": "Ali Mousavi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/almoloo/bellman/issues"
+  },
+  "homepage": "https://github.com/almoloo/bellman#readme"
+}
