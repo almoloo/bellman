@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const flatfile = require('flatfile');
 
 // ADD ALERT
 router.post('/addAlert', async (req, res) => {
@@ -23,10 +24,14 @@ router.post('/addAlert', async (req, res) => {
         };
         data.alerts.push(alertData);
         data.save();
+        const returnData = {...alertData};
+        delete returnData.id;
+        delete returnData.createDate;
+        delete returnData.status;
         res.json({
             success: true,
             message: 'Alert saved.',
-            data: alertData
+            data: returnData
         });
     });
 });
