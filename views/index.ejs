@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>bellman - Get notified of cryptocurrency price changes.</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body class="bg-gray-100 dark:bg-slate-900 text-black dark:text-white min-h-screen dark">
+        <section class="grid grid-cols-8 lg:grid-cols-12 min-h-screen">
+            <div class="flex flex-col col-start-2 col-end-8 md:col-start-2 md:col-end-6 lg:col-start-5 lg:col-end-9">
+                <header class="flex items-center justify-between py-10">
+                    <div>
+                        <h1 class="text-4xl font-extrabold">
+                            <a href="/">bellman</a>
+                        </h1>
+                        <span class="block text-gray-600 dark:text-gray-400 mt-1">
+                            Get notified of price changes and be the first person to know.
+                        </span>
+                    </div>
+                    <button id="dark-mode-btn" class="text-gray-400 hover:text-gray-500 transition-colors shrink-0 p-2 ml-4" title="Switch dark mode">
+                        <svg xmlns="http://www.w3.org/2000/svg" id="sun-icon" fill="currentcolor" class="w-5 h-5" viewBox="0 0 16 16">
+                            <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" id="moon-icon" fill="currentcolor" class="w-5 h-5 hidden" viewBox="0 0 16 16">
+                            <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                            <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+                        </svg>
+                    </button>
+                </header>
+                <main>
+                    <form id="alert-form" class="flex flex-col">
+                        <!-- COIN -->
+                        <span>Send an alert when:</span>
+                        <select name="coin" id="coin-select" class="appearance-none bg-white dark:bg-slate-700 dark:hover:bg-slate-600 dark:focus:bg-slate-600 border disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-black/25 dark:disabled:text-white/25 border-gray-200 dark:border-transparent rounded-sm px-3 py-2 my-4">
+                            <% coins.forEach(element => { %>
+                                <option value="<%= element.id %>"><%= element.name %></option>
+                            <% }) %>
+                        </select>
+                        <!-- PRICE TYPE -->
+                        <span>goes:</span>
+                        <div class="flex text-center my-4">
+                            <div class="group w-1/2">
+                                <input type="radio" name="priceType" value="above" id="above-radio" class="peer hidden" required checked>
+                                <label for="above-radio" class="w-full block transition-colors bg-slate-400/50 hover:bg-slate-400/75 peer-checked:bg-slate-500 text-slate-500 peer-checked:text-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 dark:peer-checked:bg-slate-600 dark:text-slate-500 dark:peer-checked:text-white rounded-l-sm cursor-pointer py-2">above</label>
+                            </div>
+                            <div class="group w-1/2">
+                                <input type="radio" name="priceType" value="below" id="below-radio" class="peer hidden" required>
+                                <label for="below-radio" class="w-full block transition-colors bg-slate-400/50 hover:bg-slate-400/75 peer-checked:bg-slate-500 text-slate-500 peer-checked:text-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 dark:peer-checked:bg-slate-600 dark:text-slate-500 dark:peer-checked:text-white rounded-r-sm cursor-pointer py-2">below</label>
+                            </div>
+                        </div>
+                        <!-- PRICE -->
+                        <span>the price:</span>
+                        <input type="text" inputmode="decimal" name="price" id="price-input" class="transition-colors bg-white dark:bg-slate-700 dark:hover:bg-slate-600 dark:focus:bg-slate-600 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-black/25 dark:disabled:text-white/25 border border-gray-200 dark:border-transparent rounded-sm px-3 py-2 my-4" placeholder="Enter the price in USDT" autocomplete="off" requiredd>
+                        <!-- ALERT TYPE -->
+                        <span>through:</span>
+                        <div class="flex text-center my-4">
+                            <div class="group w-1/2">
+                                <input type="radio" name="alertType" value="email" id="email-radio" class="peer hidden" required checked>
+                                <label for="email-radio" class="w-full block transition-colors bg-slate-400/50 hover:bg-slate-400/75 peer-checked:bg-slate-500 text-slate-500 peer-checked:text-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 dark:peer-checked:bg-slate-600 dark:text-slate-500 dark:peer-checked:text-white rounded-l-sm cursor-pointer py-2">email</label>
+                            </div>
+                            <div class="group w-1/2">
+                                <input type="radio" name="alertType" value="push" id="push-radio" class="peer hidden" required>
+                                <label for="push-radio" class="w-full block transition-colors bg-slate-400/50 hover:bg-slate-400/75 peer-checked:bg-slate-500 text-slate-500 peer-checked:text-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 dark:peer-checked:bg-slate-600 dark:text-slate-500 dark:peer-checked:text-white rounded-r-sm cursor-pointer py-2">notification</label>
+                            </div>
+                        </div>
+                        <!-- ALERT TARGET -->
+                        <input type="email" name="email" id="email-input" class="transition-colors bg-white dark:bg-slate-700 dark:hover:bg-slate-600 dark:focus:bg-slate-600 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-black/25 dark:disabled:text-white/25 border border-gray-200 dark:border-transparent rounded-sm px-3 py-2 my-4" placeholder="Enter your email address" autocomplete="off" requiredd>
+                        <!-- SUBMIT -->
+                        <button type="submit" id="submit-btn" class="group block rounded-sm relative transition-colors bg-green-600 dark:bg-green-700 hover:bg-green-700 dark:hover:bg-green-800 active:bg-green-800 dark:active:bg-green-900 disabled:bg-gray-400 dark:disabled:bg-gray-600 text-white px-3 py-2 mt-4">
+                            <span class="btn-text group-disabled:text-transparent">Create Alert</span>
+                            <div class="btn-loader absolute top-0 right-0 bottom-0 left-0 justify-center items-center text-white/50 hidden group-disabled:flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="animate-spin w-5 h-5" viewBox="0 0 16 16">
+                                    <path d="M10 3c0 1.313-.304 2.508-.8 3.4a1.991 1.991 0 0 0-1.484-.38c-.28-.982-.91-2.04-1.838-2.969a8.368 8.368 0 0 0-.491-.454A5.976 5.976 0 0 1 8 2c.691 0 1.355.117 1.973.332.018.219.027.442.027.668Zm0 5c0 .073-.004.146-.012.217 1.018-.019 2.2-.353 3.331-1.006a8.39 8.39 0 0 0 .57-.361 6.004 6.004 0 0 0-2.53-3.823 9.02 9.02 0 0 1-.145.64c-.34 1.269-.944 2.346-1.656 3.079.277.343.442.78.442 1.254Zm-.137.728a2.007 2.007 0 0 1-1.07 1.109c.525.87 1.405 1.725 2.535 2.377.2.116.402.222.605.317a5.986 5.986 0 0 0 2.053-4.111c-.208.073-.421.14-.641.199-1.264.339-2.493.356-3.482.11ZM8 10c-.45 0-.866-.149-1.2-.4-.494.89-.796 2.082-.796 3.391 0 .23.01.457.027.678A5.99 5.99 0 0 0 8 14c.94 0 1.83-.216 2.623-.602a8.359 8.359 0 0 1-.497-.458c-.925-.926-1.555-1.981-1.836-2.96-.094.013-.191.02-.29.02ZM6 8c0-.08.005-.16.014-.239-1.02.017-2.205.351-3.34 1.007a8.366 8.366 0 0 0-.568.359 6.003 6.003 0 0 0 2.525 3.839 8.37 8.37 0 0 1 .148-.653c.34-1.267.94-2.342 1.65-3.075A1.988 1.988 0 0 1 6 8Zm-3.347-.632c1.267-.34 2.498-.355 3.488-.107.196-.494.583-.89 1.07-1.1-.524-.874-1.406-1.733-2.541-2.388a8.363 8.363 0 0 0-.594-.312 5.987 5.987 0 0 0-2.06 4.106c.206-.074.418-.14.637-.199ZM8 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/>
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14Zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16Z"/>
+                                </svg>
+                            </div>
+                        </button>
+                    </form>
+                </main>
+                <footer class="text-center text-gray-600 dark:text-gray-400 mt-auto py-5">
+                    Developed by <a href="https://twitter.com/almoloo" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">Ali Mousavi</a>
+                </footer>
+            </div>
+        </section>
+        <script>
+            // ----- DARK MODE -----
+            const darkModeBtn = document.getElementById('dark-mode-btn');
+            const body = document.querySelector('body');
+            const html = document.querySelector('html');
+            const darkMode = localStorage.getItem('darkMode');
+            // DARK MODE ON LOAD
+            if (darkMode === 'false') {
+                body.classList.remove('dark');
+                html.classList.remove('dark');
+            }
+            // DARK MODE SWITCHER
+            const darkModeToggle = () => {
+                body.classList.toggle('dark');
+                html.classList.toggle('dark');
+                if (body.classList.contains('dark')) {
+                    localStorage.setItem('darkMode', 'true');
+                    document.getElementById('sun-icon').classList.remove('hidden');
+                    document.getElementById('moon-icon').classList.add('hidden');
+                } else {
+                    localStorage.setItem('darkMode', 'false');
+                    document.getElementById('sun-icon').classList.add('hidden');
+                    document.getElementById('moon-icon').classList.remove('hidden');
+                }
+            }
+            if (darkMode === 'false') {
+                body.classList.remove('dark');
+                html.classList.remove('dark');
+                document.getElementById('sun-icon').classList.add('hidden');
+                document.getElementById('moon-icon').classList.remove('hidden');
+            } else {
+                body.classList.add('dark');
+                html.classList.add('dark');
+                document.getElementById('sun-icon').classList.remove('hidden');
+                document.getElementById('moon-icon').classList.add('hidden');
+            }
+            darkModeBtn.addEventListener('click', darkModeToggle);
+            // ----- END DARK MODE -----
+            // ----- FORM SUBMIT -----
+            const form = document.getElementById('alert-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const submitLoader = submitBtn.querySelector('.btn-loader');
+            const submitText = submitBtn.querySelector('.btn-text');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // FORM ELEMENTS
+                const coinSelect = document.getElementById('coin-select');
+                const priceRadioAbove = document.getElementById('above-radio');
+                const priceRadioBelow = document.getElementById('below-radio');
+                const priceInput = document.getElementById('price-input');
+                const emailRadio = document.getElementById('email-radio');
+                const pushRadio = document.getElementById('push-radio');
+                const emailInput = document.getElementById('email-input');
+                // DISABLE ELEMENTS
+                submitBtn.setAttribute('disabled', 'disabled');
+                coinSelect.setAttribute('disabled', 'disabled');
+                priceRadioAbove.setAttribute('disabled', 'disabled');
+                priceRadioBelow.setAttribute('disabled', 'disabled');
+                priceInput.setAttribute('disabled', 'disabled');
+                emailRadio.setAttribute('disabled', 'disabled');
+                pushRadio.setAttribute('disabled', 'disabled');
+                emailInput.setAttribute('disabled', 'disabled');
+                // SEND DATA TO SERVER
+                const alertData = {
+                    coin: coinSelect.value,
+                    priceType: priceRadioAbove.checked ? 'above' : 'below',
+                    price: priceInput.value,
+                    alertType: emailRadio.checked ? 'email' : 'push',
+                    alertTarget: emailInput.value
+                }
+                console.log(alertData)
+                // setTimeout(function(){
+                //     // ENABLE ELEMENTS
+                //     submitBtn.removeAttribute('disabled');
+                //     coinSelect.removeAttribute('disabled');
+                //     priceRadioAbove.removeAttribute('disabled');
+                //     priceRadioBelow.removeAttribute('disabled');
+                //     priceInput.removeAttribute('disabled');
+                //     emailRadio.removeAttribute('disabled');
+                //     pushRadio.removeAttribute('disabled');
+                //     emailInput.removeAttribute('disabled');
+                // }, 2000)
+            });
+        </script>
+    </body>
+</html>

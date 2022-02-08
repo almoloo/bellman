@@ -18,6 +18,7 @@ app.use('/api', apiRouter);
 
 // Views
 const viewsRouter = require('./routes/views');
+const bcrypt = require('bcryptjs/dist/bcrypt');
 app.use('/', viewsRouter);
 
 // SEND ALERT
@@ -53,11 +54,14 @@ const sendAlert = (alertId) => {
         } else if(alertType === 'push') {
             // SEND PUSH NOTIFICATION
             const pusher = new pushbullet(process.env.PUSHBULLET_API_KEY);
-            pusher.note(alert.device, 'Alert', 'Your alert has been triggered.', function(error, response) {
+            pusher.note(alert.alertTarget, 'bellman', `${alert.coin} is ${alert.alertType} $${alert.price}.`, function(error, response) {
                 if(error) {
                     console.log(error);
                 } else {
                     console.log('Push notification sent.');
+                    // UPDATE ALERT STATUS
+                    alert.status = 'sent';
+                    data.save();
                 };
             });
         }
@@ -136,7 +140,42 @@ app.listen(port, async () => {
     if(!fileExists) {
         console.log('Database not found, initializing...');
         const rawDB = {
-            "settings": {},
+            "settings": {
+                coins: [
+                    {
+                        id: 'BTC',
+                        name: 'Bitcoin'
+                    },
+                    {
+                        id: 'ETH',
+                        name: 'Ethereum'
+                    },
+                    {
+                        id: 'XRP',
+                        name: 'Ripple'
+                    },
+                    {
+                        id: 'LTC',
+                        name: 'Litecoin'
+                    },
+                    {
+                        id: 'BCH',
+                        name: 'Bitcoin Cash'
+                    },
+                    {
+                        id: 'DOGE',
+                        name: 'Dogecoin'
+                    },
+                    {
+                        id: 'ADA',
+                        name: 'Cardano'
+                    },
+                    {
+                        id: 'BNB',
+                        name: 'Binance Coin'
+                    },
+                ]
+            },
             "alerts": []
         }
         fs.writeFileSync('./database.json', JSON.stringify(rawDB));
