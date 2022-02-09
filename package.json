@@ -4,6 +4,7 @@
   "description": "Get notified of cryptocurrency price changes.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon index.js",
     "tailwind": "npx tailwindcss -i ./wwwroot/src.style.css -o ./wwwroot/style.css --watch"
   },

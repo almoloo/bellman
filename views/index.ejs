@@ -36,11 +36,18 @@
                     <form id="alert-form" class="flex flex-col">
                         <!-- COIN -->
                         <span>Send an alert when:</span>
-                        <select name="coin" id="coin-select" class="appearance-none cursor-pointer disabled:cursor-default bg-white dark:bg-slate-700 dark:hover:bg-slate-600 dark:focus:bg-slate-600 border disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-black/25 dark:disabled:text-white/25 border-gray-200 dark:border-transparent rounded-sm px-3 py-2 my-4">
-                            <% coins.forEach(element => { %>
-                                <option value="<%= element.id %>"><%= element.name %></option>
-                            <% }) %>
-                        </select>
+                        <div class="relative my-4">
+                            <select name="coin" id="coin-select" class="appearance-none cursor-pointer disabled:cursor-default w-full bg-white dark:bg-slate-700 dark:hover:bg-slate-600 dark:focus:bg-slate-600 border disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-black/25 dark:disabled:text-white/25 border-gray-200 dark:border-transparent rounded-sm px-3 py-2">
+                                <% coins.forEach(element => { %>
+                                    <option value="<%= element.id %>"><%= element.name %></option>
+                                <% }) %>
+                            </select>
+                            <div class="absolute top-0 right-0 bottom-0 flex items-center pointer-events-none pr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 fill-gray-400 w-4 h-4" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                            </div>
+                        </div>
                         <!-- PRICE TYPE -->
                         <span>goes:</span>
                         <div class="flex text-center my-4">
@@ -55,7 +62,7 @@
                         </div>
                         <!-- PRICE -->
                         <span>the price:</span>
-                        <input type="text" inputmode="decimal" name="price" id="price-input" class="transition-colors bg-white dark:bg-slate-700 dark:hover:bg-slate-600 dark:focus:bg-slate-600 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-black/25 dark:disabled:text-white/25 border border-gray-200 dark:border-transparent rounded-sm px-3 py-2 my-4" placeholder="Enter the price in USDT" autocomplete="off" requiredd>
+                        <input type="text" inputmode="decimal" name="price" id="price-input" class="transition-colors bg-white dark:bg-slate-700 dark:hover:bg-slate-600 dark:focus:bg-slate-600 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-black/25 dark:disabled:text-white/25 border border-gray-200 dark:border-transparent rounded-sm px-3 py-2 my-4" placeholder="Enter the price in USDT" autocomplete="off" required>
                         <!-- ALERT TYPE -->
                         <span>through:</span>
                         <div class="flex text-center my-4">
@@ -69,7 +76,7 @@
                             </div>
                         </div>
                         <!-- ALERT TARGET -->
-                        <input type="email" name="email" id="email-input" class="transition-colors bg-white dark:bg-slate-700 dark:hover:bg-slate-600 dark:focus:bg-slate-600 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-black/25 dark:disabled:text-white/25 border border-gray-200 dark:border-transparent rounded-sm px-3 py-2 my-4" placeholder="Enter your email address" autocomplete="off" requiredd>
+                        <input type="email" name="email" id="email-input" class="transition-colors bg-white dark:bg-slate-700 dark:hover:bg-slate-600 dark:focus:bg-slate-600 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-black/25 dark:disabled:text-white/25 border border-gray-200 dark:border-transparent rounded-sm px-3 py-2 my-4" placeholder="Enter your email address" autocomplete="email" required>
                         <!-- SUBMIT -->
                         <button type="submit" id="submit-btn" class="group block rounded-sm relative transition-colors bg-green-600 dark:bg-green-700 hover:bg-green-700 dark:hover:bg-green-800 active:bg-green-800 dark:active:bg-green-900 disabled:bg-gray-400 dark:disabled:bg-gray-600 text-white px-3 py-2 mt-4">
                             <span class="btn-text group-disabled:text-transparent">Set Alert</span>
@@ -91,33 +98,21 @@
         <div id="success-dialog" class="fixed top-0 right-0 bottom-0 left-0 bg-black/25 backdrop-blur-sm flex transition-opacity opacity-0 pointer-events-none">
             <div class="dialog-container flex flex-col bg-white dark:bg-slate-700 w-full md:w-auto rounded shadow m-7 mt-auto md:m-auto p-5 pt-4 transition-all delay-75 translate-y-16 opacity-0">
                 <div>
-                    <div class="flex flex-row items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="fill-green-400 shrink-0 w-12 h-12" viewBox="0 0 16 16">
-                            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
-                        </svg>
-                        <div class="ml-4">
-                            <h2 class="text-xl">Your alert was set successfully!</h2>
-                            <p class="text-gray-400">You will receive an email when the alert is triggered.</p>
-                        </div>
-                    </div>
+                    <h2 class="text-xl text-green-600 dark:text-green-500">Your alert was set successfully!</h2>
+                    <p class="text-gray-400">You will receive an email when the alert is triggered.</p>
                 </div>
-                <button type="button" class="dismiss-btn group block rounded-sm relative transition-colors bg-gray-500 dark:bg-gray-500 hover:bg-gray-600 dark:hover:bg-gray-600 active:bg-gray-600/75 dark:active:bg-gray-600/75 disabled:bg-gray-400 dark:disabled:bg-gray-600 text-white px-3 py-2 mt-4">
+                <button type="button" class="dismiss-btn block rounded-sm transition-colors bg-gray-400 dark:bg-gray-600 hover:bg-gray-500 dark:hover:bg-gray-600/75 active:bg-gray-600 dark:active:bg-gray-600/50 text-white px-8 py-2 mt-5 ml-auto">
                     OK
                 </button>
             </div>
         </div>
         <div id="fail-dialog" class="fixed top-0 right-0 bottom-0 left-0 bg-black/25 backdrop-blur-sm flex transition-opacity opacity-0 pointer-events-none">
             <div class="dialog-container flex flex-col bg-white dark:bg-slate-700 w-full md:w-auto rounded shadow m-7 mt-auto md:m-auto p-5 pt-4 transition-all delay-75 translate-y-16 opacity-0">
-                <div class="flex flex-row items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-red-400 shrink-0 w-12 h-12" viewBox="0 0 16 16">
-                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                    </svg>
-                    <div class="ml-4">
-                        <h2 class="text-xl">There was an error!</h2>
-                        <p class="text-gray-400">Error saving alert, please try again later.</p>
-                    </div>
+                <div class="md:pr-12">
+                    <h2 class="text-xl text-red-600 dark:text-red-400">There was an error!</h2>
+                    <p class="text-gray-400">Error saving alert, please try again later.</p>
                 </div>
-                <button type="button" class="dismiss-btn group block rounded-sm relative transition-colors bg-gray-500 dark:bg-gray-500 hover:bg-gray-600 dark:hover:bg-gray-600 active:bg-gray-600/75 dark:active:bg-gray-600/75 disabled:bg-gray-400 dark:disabled:bg-gray-600 text-white px-3 py-2 mt-4">
+                <button type="button" class="dismiss-btn block rounded-sm transition-colors bg-gray-400 dark:bg-gray-600 hover:bg-gray-500 dark:hover:bg-gray-600/75 active:bg-gray-600 dark:active:bg-gray-600/50 text-white px-8 py-2 mt-5 ml-auto">
                     OK
                 </button>
             </div>
@@ -203,7 +198,7 @@
             const submitText = submitBtn.querySelector('.btn-text');
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                showDialog(successDialog);
+                showDialog(failDialog);
                 return;
                 // FORM ELEMENTS
                 const coinSelect = document.getElementById('coin-select');

@@ -41,7 +41,7 @@ const sendAlert = (alertId) => {
             });
             const mailOptions = {
                 from: '' + process.env.EMAIL_USER,
-                to: alert.email,
+                to: alert.alertTarget,
                 subject: 'Alert',
                 text: 'Your alert has been triggered.'
             };
@@ -57,17 +57,10 @@ const sendAlert = (alertId) => {
             });
         } else if(alertType === 'push') {
             // SEND PUSH NOTIFICATION
-            const pusher = new pushbullet(process.env.PUSHBULLET_API_KEY);
-            pusher.note(alert.alertTarget, 'bellman', `${alert.coin} is ${alert.alertType} $${alert.price}.`, function(error, response) {
-                if(error) {
-                    console.log(error);
-                } else {
-                    console.log('Push notification sent.');
-                    // UPDATE ALERT STATUS
-                    alert.status = 'sent';
-                    data.save();
-                };
-            });
+            // WILL BE IMPLEMENTED LATER
+        } else if(alertType === 'sms') {
+            // SEND SMS
+            // WILL BE IMPLEMENTED LATER
         }
     });
 }
@@ -102,21 +95,16 @@ setInterval(() => {
                 });
                 const alerts = alertsByCurrency[coin];
                 alerts.forEach(alert => {
+                    console.log(coin, parseFloat(price))
                     const priceType = alert.priceType;
                     const alertType = alert.alertType;
                     const alertTarget = alert.alertTarget;
-                    const alertPrice = alert.alertPrice;
+                    const alertPrice = parseFloat(alert.alertPrice);
+                    const currentPrice = parseFloat(price);
                     // CHECK PRICE
-                    if(alertType === 'above'){
-                        if(price > alertPrice){
-                            // SEND ALERT
-                            sendAlert(alert.id);
-                        }
-                    } else if(alertType === 'below'){
-                        if(price < alertPrice){
-                            // SEND ALERT
-                            sendAlert(alert.id);
-                        }
+                    if((alertType === 'above' && currentPrice > alertPrice) || (alertType === 'below' && currentPrice < alertPrice)) {
+                        // SEND ALERT
+                        sendAlert(alert.id);
                     }
                 });
             }
