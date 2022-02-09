@@ -141,8 +141,8 @@
             // CLOSE DIALOG ON CLICKING OUTSIDE AND ON DISMISS BUTTON
             document.addEventListener('click', (e) => {
                 if (e.target.closest('.dialog-container') && !e.target.closest('.dismiss-btn')) {
-                    console.log('s')
-                    return};
+                    return
+                };
                 const dialog = document.getElementById(document.body.getAttribute('data-dialog-id'));
                 if (dialog) hideDialog(dialog);
             });
@@ -198,8 +198,6 @@
             const submitText = submitBtn.querySelector('.btn-text');
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                showDialog(failDialog);
-                return;
                 // FORM ELEMENTS
                 const coinSelect = document.getElementById('coin-select');
                 const priceRadioAbove = document.getElementById('above-radio');
@@ -236,21 +234,23 @@
                 .then(data => {
                     if (data.success) {
                         console.log(data.message, data.data);
+                        showDialog(successDialog);
+                        priceInput.value = '';
+                        emailInput.value = '';
                     } else {
                         console.error(data.message);
+                        showDialog(failDialog);
                     }
+                    // ENABLE ELEMENTS
+                    submitBtn.removeAttribute('disabled');
+                    coinSelect.removeAttribute('disabled');
+                    priceRadioAbove.removeAttribute('disabled');
+                    priceRadioBelow.removeAttribute('disabled');
+                    priceInput.removeAttribute('disabled');
+                    emailRadio.removeAttribute('disabled');
+                    pushRadio.removeAttribute('disabled');
+                    emailInput.removeAttribute('disabled');
                 })
-                // setTimeout(function(){
-                //     // ENABLE ELEMENTS
-                //     submitBtn.removeAttribute('disabled');
-                //     coinSelect.removeAttribute('disabled');
-                //     priceRadioAbove.removeAttribute('disabled');
-                //     priceRadioBelow.removeAttribute('disabled');
-                //     priceInput.removeAttribute('disabled');
-                //     emailRadio.removeAttribute('disabled');
-                //     pushRadio.removeAttribute('disabled');
-                //     emailInput.removeAttribute('disabled');
-                // }, 2000)
             });
         </script>
     </body>
