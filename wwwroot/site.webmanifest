@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "bellman - Get notified",
+    "short_name": "bellman",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
