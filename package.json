@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "tailwind": "npx tailwindcss -i ./wwwroot/src.style.css -o ./wwwroot/style.css --watch"
+    "tailwind": "npx tailwindcss -i ./wwwroot/styles/src.style.css -o ./wwwroot/styles/style.css --watch"
   },
   "repository": {
     "type": "git",
