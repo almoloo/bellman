@@ -8,6 +8,9 @@
     "dev": "nodemon index.js",
     "tailwind": "npx tailwindcss -i ./wwwroot/styles/src.style.css -o ./wwwroot/styles/style.css --watch"
   },
+  "nodemonConfig": {
+    "ignore": ["/db/*.json"]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/almoloo/bellman.git"

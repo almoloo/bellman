@@ -26,7 +26,7 @@ app.use('/', viewsRouter);
 const sendAlert = (alertId) => {
     // GET ALERT FROM DATABASE
     try {
-        flatfile.db('./database.json', async (err, data) => {
+        flatfile.db('./db/database.json', async (err, data) => {
             if(err) throw err;
             const alert = data.alerts.find(alert => alert.id === alertId);
             if(alert.alertType === 'email') {
@@ -101,7 +101,7 @@ const sendAlert = (alertId) => {
 setInterval(() => {
     // GET ALERTS FROM DATABASE
     try {
-        flatfile.db('./database.json', async (err, data) => {
+        flatfile.db('./db/database.json', async (err, data) => {
             if(err) {
                 throw err;
             };
@@ -154,7 +154,7 @@ const port = process.env.PORT || 3000;
 app.listen(port, async () => {
     console.log(`Listening on port ${port}`)
     // CHECK IF DATABASE IS INITIALIZED
-    const fileExists = false || await fs.promises.stat('database.json').catch(err => false);
+    const fileExists = false || await fs.promises.stat('db/database.json').catch(err => false);
     if(!fileExists) {
         console.log('Database not found, initializing...');
         const rawDB = {
@@ -196,6 +196,6 @@ app.listen(port, async () => {
             },
             "alerts": []
         }
-        fs.writeFileSync('./database.json', JSON.stringify(rawDB));
+        fs.writeFileSync('./db/database.json', JSON.stringify(rawDB));
     }
 });
