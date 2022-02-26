@@ -1,6 +1,5 @@
 # bellman
 ##### Get notified of cryptocurrency price changes.
-[https://bellman.top](https://bellman.top)
 
 ![bellman](/screenshots/hero.png)
 > This for a [contest on gitcoin](https://gitcoin.co/issue/3commas-io/3commas-official-api-docs/122/100027507), but the development will continue even after the conclusion of the contest. It was not tested thoroughly and is probably not suitable for production use yet. Please use with caution!
